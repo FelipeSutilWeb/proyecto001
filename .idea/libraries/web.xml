@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="web">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/web/gson-2.2.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/web/mysql-connector-java-8.0.18.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>SAPSG - RFID</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link href="view/assets/node_modules/morrisjs/morris.css" rel="stylesheet" />
+        <link href="view/assets/node_modules/c3-master/c3.min.css" rel="stylesheet" />
+        <link href="view/dist/css/style.css" rel="stylesheet" />
+        <link href="view/dist/css/pages/dashboard1.css" rel="stylesheet" />
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+        <style>
+        .mySlides {display:none}
+        .w3-left, .w3-right, .w3-badge {cursor:pointer}
+        .w3-badge {height:13px;width:13px;padding:0}
+        </style>
+    </h:head>
+    <h:body class="skin-default-dark fixed-layout">
+        
+        <div class="main-wrapper">
+            <header class="topbar">
+                <nav class="navbar top-navbar navbar-expand-md navbar-dark">
+
+                    <div class="navbar-header">
+                        <img src="view/logosapsg.png" width="120em" style="padding: 10px" />
+                    </div>
+
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" href="index.xhtml">Datos Maestros</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="material.xhtml">Procesos</a>
+                            </li>
+                            <li class="nav-item active">
+                                <a class="nav-link" href="listar.xhtml">Configuración <span class="sr-only">(current)</span></a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </header>
+            
+            <div class="page-wrapper">
+                <div class="w3-content w3-display-container" style="max-width:800px">
+                    <img class="mySlides" src="Images/img2.jpg" style="width:100%" />
+                    <img class="mySlides" src="Images/img1.png" style="width:100%" />
+                    <img class="mySlides" src="Images/img0.jpg" style="width:100%" />
+                    <div class="w3-center w3-container w3-section w3-large w3-text-white w3-display-bottommiddle" style="width:100%">
+                        <div class="w3-left w3-hover-text-khaki" onclick="plusDivs(-1)">&#10094;</div>
+                        <div class="w3-right w3-hover-text-khaki" onclick="plusDivs(1)">&#10095;</div>
+                        <span class="w3-badge demo w3-border w3-transparent w3-hover-white" onclick="currentDiv(1)"></span>
+                        <span class="w3-badge demo w3-border w3-transparent w3-hover-white" onclick="currentDiv(2)"></span>
+                        <span class="w3-badge demo w3-border w3-transparent w3-hover-white" onclick="currentDiv(3)"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    <!--<script src="view/assets/node_modules/jquery/jquery-3.2.1.min.js"></script>-->
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+    <!-- Bootstrap popper Core JavaScript -->
+    <script src="view/assets/node_modules/popper/popper.min.js"></script>
+    <script src="view/assets/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- slimscrollbar scrollbar JavaScript -->
+    <script src="view/dist/js/perfect-scrollbar.jquery.min.js"></script>
+    <!--Wave Effects -->
+    <script src="view/dist/js/waves.js"></script>
+    <!--Menu sidebar -->
+    <script src="view/dist/js/sidebarmenu.js"></script>
+    <!--Custom JavaScript -->
+    <script src="view/dist/js/custom.min.js"></script>
+    <!-- ============================================================== -->
+    <!-- This page plugins -->
+    <!-- ============================================================== -->
+    <!--morris JavaScript -->
+    <script src="view/assets/node_modules/raphael/raphael-min.js"></script>
+    <script src="view/assets/node_modules/morrisjs/morris.min.js"></script>
+    <script src="view/assets/node_modules/jquery-sparkline/jquery.sparkline.min.js"></script>
+    <!--c3 JavaScript -->
+    <script src="view/assets/node_modules/d3/d3.min.js"></script>
+    <script src="view/assets/node_modules/c3-master/c3.min.js"></script> 
+    <!--<script src="view/editplace.js" type="text/javascript"></script>-->
+    <script src="view/xlsx.full.min.js"></script>
+    
+
+    <script type="text/javascript" src="https://paramquery.com/pqselect/trial/pqselect.min.js"></script>
+    <script type="text/javascript" src="view/pqgrid.min.js"></script>
+    <script type="text/javascript" src="view/pq-localize-en.js"></script>
+    
+<style>
+
+    .hiddenRow {
+        padding: 0 4px !important;
+        background-color: #eeeeee;
+        font-size: 13px;
+    }
+
+
+    .gj-width-full{
+        display: block;
+        width: 100%;
+        padding: 0.375rem 0.75rem;
+        font-size: 0.875rem;
+        line-height: 1.5;
+        color: #4F5467;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #e9ecef;
+        border-radius: 0.25rem;        
+    }
+    #grid2.table th, .table td {
+        padding: 10px;
+        font-size: 11px
+    }
+    
+    table.gj-grid{
+        table-layout: unset !important;
+    }
+    .gj-grid-bootstrap-4 tbody tr td[data-mode="edit"] [data-role="edit"] input[type="text"] {
+        height: 34px;
+    }
+    
+    .block-all{
+            opacity:0.9;pointer-events:none;
+    }
+    
+    .hide-all{
+        display: none;
+    }
+    @media (min-width: 769px){
+        .left-sidebar:hover {
+            left: -200px;
+        }
+    }
+    .topbar .top-navbar .navbar-nav > .nav-item > .nav-link{
+        font-size:12px;
+    }
+    .btn-primary, .btn-primary:hover, .btn-success, .btn-success:hover {
+    color: #fff;
+    background-color: #adbcbe;
+    border-color: #92a2a4;
+}
+
+    </style>
+
+<script>
+    //<![CDATA[
+        var slideIndex = 1;
+        showDivs(slideIndex); 
+        
+        function plusDivs(n) {
+          showDivs(slideIndex += n);
+        }
+
+        function currentDiv(n) {
+          showDivs(slideIndex = n);
+        }        
+        
+        function showDivs(n) {
+          var i;
+          var x = document.getElementsByClassName("mySlides");
+          var dots = document.getElementsByClassName("demo");
+          if (n > x.length) {slideIndex = 1}
+          if (n < 1) {slideIndex = x.length}
+          for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";  
+          }
+          for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" w3-white", "");
+          }
+          x[slideIndex-1].style.display = "block";  
+          dots[slideIndex-1].className += " w3-white";
+        }        
+    //]]>
+</script>
+    </h:body>
+</html>

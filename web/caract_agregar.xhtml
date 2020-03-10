@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>SAPSG - RFID</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link href="view/assets/node_modules/morrisjs/morris.css" rel="stylesheet" />
+        <link href="view/assets/node_modules/c3-master/c3.min.css" rel="stylesheet" />
+        <link href="view/dist/css/style.css" rel="stylesheet" />
+        <link href="view/dist/css/pages/dashboard1.css" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="https://paramquery.com/pro2/Content/css6.2.4/pqgrid.min.css" />
+        <link rel="stylesheet" type="text/css" href="https://paramquery.com/pro2/Content/css6.2.4/pqgrid.ui.min.css" />
+        <link rel="stylesheet" type="text/css" href="https://paramquery.com/pqselect/trial/pqselect.min.css" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <style>
+            .form-control,body, .dropdown-item{
+    		font-size: .7rem;
+            }
+            
+            .form-control {padding: 3px;min-height: 30px;}
+            .page-wrapper, .footer{margin-left: 40px; margin-right: -20px; margin-top: -83px;}
+            .page-wrapper {background: #ffffff;}
+             body {background-color: #ffffff; color: #000000;}
+             
+             .nav-tabs .nav-link {
+                border: 1px solid transparent;
+                border-top-left-radius: 0.25rem;
+                border-top-right-radius: 0.25rem;
+                line-height: 0.5;
+            }
+        </style>
+    </h:head>
+    <h:body class="skin-default-dark fixed-layout">
+        <h:form>
+            <p:remoteCommand name="insertDatos" action="#{inventariobean.insertNuevaCaract()}"></p:remoteCommand>
+            <p:remoteCommand name="getCaractersById" action="#{inventariobean.caracterById()}"></p:remoteCommand>
+            <p:remoteCommand name="getCaracters" action="#{inventariobean.lstTiposCaracter()}"></p:remoteCommand>
+            <p:remoteCommand name="nones" action="#{inventariobean.processJson()}"></p:remoteCommand>
+            <p:remoteCommand name="delMatnr" action="#{inventariobean.delMaterial()}"></p:remoteCommand>
+            <p:remoteCommand name="matnrIn" action="#{inventariobean.addMaterial()}"  
+                             onerror="alert('ERROR! No se pudo registrar el material, favor volver a intentar mas tarde.')"
+                             oncomplete="$('#addMaterial').modal('hide');window.location.reload()" ></p:remoteCommand>
+            <p:remoteCommand name="rmd" action="#{inventariobean.maxIdCaract()}"></p:remoteCommand>
+            <p:remoteCommand name="rmd2" action="#{inventariobean.lstTipos()}"></p:remoteCommand>
+            <p:remoteCommand name="rmd3" action="#{inventariobean.lstTipoDato()}"></p:remoteCommand>
+            <!--Json from app mobile-->
+            <f:metadata>
+                <f:viewParam name="jsonStr" value="#{inventariobean.processJson()}"/>
+            </f:metadata>
+        </h:form>
+        
+        <div class="main-wrapper">
+                <aside class="left-sidebar">
+                    <div class="d-flex no-block nav-text-box align-items-center">
+                        <img src="view/logosapsg.png" width="120em" style="padding: 10px" />
+                        <a class="waves-effect waves-dark ml-auto hidden-sm-down" href="javascript:void(0)"><i class="ti-menu"></i></a>
+                        <a class="nav-toggler waves-effect waves-dark ml-auto hidden-sm-up" href="javascript:void(0)"><i class="ti-menu ti-close"></i></a>
+                    </div>
+                    <!-- Sidebar scroll-->
+                    <div class="scroll-sidebar">
+                        <!-- Sidebar navigation-->
+                        <nav class="sidebar-nav">
+                            <ul id="sidebarnav">
+                                <li> <a class="waves-effect waves-dark" href="index.xhtml" aria-expanded="false"><i class="fa fa-tachometer"></i><span class="hide-menu">Inicio</span></a></li>
+                                <li> <a class="waves-effect waves-dark" href="grafico_cd.xhtml" aria-expanded="false"><i class="fa fa-list-alt"></i><span class="hide-menu">Operaciones</span></a></li>
+                                <li> <a class="waves-effect waves-dark active" href="listar.xhtml" aria-expanded="false"><i class="fa fa-plus-circle"></i><span class="hide-menu">Datos Maestros</span></a></li>
+                            </ul>
+                        </nav>
+                        <!-- End Sidebar navigation -->
+                    </div>
+                    <!-- End Sidebar scroll-->
+                </aside>        
+            
+            <div class="page-wrapper">
+                <br></br>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div>
+                                        <ul class="nav nav-tabs">
+                                            <li class="nav-item">
+                                                <a class="nav-link active" href="listar.xhtml">Buscar Material</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link active" href="db_agregar.xhtml">Agregar Material</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link active" href="vermatnr.xhtml">Ver Material</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link active" style="background-image: linear-gradient(#16afcf, #9de8f7); color: white;" href="caract_agregar.xhtml">Agregar Caracteristicas</a>
+                                            </li>
+                                            <li>
+                                                <a class="nav-link active" href="caracteristicas.xhtml">Ver Caracteristicas</a>
+                                            </li>
+                                        </ul>    
+                                    </div>
+                                    <br></br>
+                                    
+                                    <div id="agrega_caract">
+                                        <div class="row">
+                                            <a type="button" class="btn btn-secondary" id="btnAgregar_Caract" style="color: black; margin-bottom: 10px; margin-left: 10px;" onclick="agregarCaract();"><i class="fas fa-save"></i></a>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-2">
+                                                ID Caracteristica: 
+                                                <input type="text" id="id_caract" class="form-control" disabled="disabled" />
+                                            </div>
+                                            <div class="col-sm-2">
+                                                Descripción Caracteristica:
+                                                <input type="text" id="desc_caract" class="form-control" />
+                                            </div>
+                                        </div>
+                                        <di class="row">
+                                            <div class="col-sm-2">
+                                                Tipo Dato: 
+                                                <select class="form-control" id="tipo_dato">
+                                                    <!--Set from tipo caracters-->
+                                                </select>
+                                            </div>
+                                            <div class="col-sm-2">
+                                                Tipo Material: 
+                                                <select class="form-control" id="tipo_matnr">
+                                                    <!--Set from tipo caracters-->
+                                                </select>
+                                            </div>
+                                        </di>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>    
+                </div>            
+            </div>
+        </div>
+
+<!--<script src="view/assets/node_modules/jquery/jquery-3.2.1.min.js"></script>-->
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+    <!-- Bootstrap popper Core JavaScript -->
+    <script src="view/assets/node_modules/popper/popper.min.js"></script>
+    <script src="view/assets/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- slimscrollbar scrollbar JavaScript -->
+    <script src="view/dist/js/perfect-scrollbar.jquery.min.js"></script>
+    <!--Wave Effects -->
+    <script src="view/dist/js/waves.js"></script>
+    <!--Menu sidebar -->
+    <script src="view/dist/js/sidebarmenu.js"></script>
+    <!--Custom JavaScript -->
+    <script src="view/dist/js/custom.min.js"></script>
+    <!-- ============================================================== -->
+    <!-- This page plugins -->
+    <!-- ============================================================== -->
+    <!--morris JavaScript -->
+    <script src="view/assets/node_modules/raphael/raphael-min.js"></script>
+    <script src="view/assets/node_modules/morrisjs/morris.min.js"></script>
+    <script src="view/assets/node_modules/jquery-sparkline/jquery.sparkline.min.js"></script>
+    <!--c3 JavaScript -->
+    <script src="view/assets/node_modules/d3/d3.min.js"></script>
+    <script src="view/assets/node_modules/c3-master/c3.min.js"></script> 
+    <!--<script src="view/editplace.js" type="text/javascript"></script>-->
+    <script src="view/xlsx.full.min.js"></script>
+    <script src="https://kit.fontawesome.com/19d50627e7.js"></script>
+
+    <script type="text/javascript" src="https://paramquery.com/pqselect/trial/pqselect.min.js"></script>
+    <script type="text/javascript" src="view/pqgrid.min.js"></script>
+    <script type="text/javascript" src="view/pq-localize-en.js"></script>
+    
+    <style>
+
+    .btn-primary {
+        color: #fff;
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+    
+    .btn-primary:hover {
+        color: #fff;
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+    
+    .btn-primary.disabled, .btn-primary:disabled {
+        color: #fff;
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+    
+    .btn-default {
+        color: #fff;
+        background-color: #7460ee;
+        border-color: #7460ee;
+    }
+
+    .gj-width-full{
+        display: block;
+        width: 100%;
+        padding: 0.375rem 0.75rem;
+        font-size: 0.875rem;
+        line-height: 1.5;
+        color: #4F5467;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #e9ecef;
+        border-radius: 0.25rem;        
+    }
+    #grid2.table th, .table td {
+        padding: 10px;
+        font-size: 11px
+    }
+    
+    table.gj-grid{
+        table-layout: unset !important;
+    }
+    .gj-grid-bootstrap-4 tbody tr td[data-mode="edit"] [data-role="edit"] input[type="text"] {
+        height: 34px;
+    }
+    
+    </style>
+    
+    <script>
+        //<![CDATA[
+        rmd();
+        rmd2();
+        rmd3();
+        $('#id_caract').addClass('block-all');
+        
+        function setmaxIdCaract(arr) {
+            var id = arr[0].id;
+
+            var sum = parseInt(id) + 1;
+            
+            $('#id_caract').val(sum);
+        }
+        
+        function tiposCaract() {
+            
+        }
+        
+        function agregarCaract() {
+            //if (descripcion = "") { error } else { if (tipo_caracter = "") { error }else { agregar } } 
+            if ($('#desc_caract').val() == "") {
+                alertWarningDescr();
+            }
+            else {
+                if ($('#tipo_matnr').val() == "Seleccionar tipo caract...")
+                {
+                    alertWarningTipo_Car();
+                }
+                else{
+                    var id = $('#id_caract').val();
+                    var atbez = $('#desc_caract').val();
+                    var atnam = "SKB_" + atbez;
+                    var tipo = $('#tipo_matnr').val();
+                    var tipo_dato = $('#tipo_dato').val();
+                    
+                    var datos = id + "%" + atnam + "%" + atbez + "%" + tipo + "%" + tipo_dato;
+
+                    insertDatos([{name:'jsonParam', value: datos}]);
+                } 
+            }
+        }
+        
+        function setErrorAddCaract(arr) {
+            if (arr == "Exito"){
+                alertSucces();
+            }
+            else {
+                alertError();
+            }
+        }
+        
+        function setTipos(arr) {       
+            $('#tipo_matnr').append("<option>Seleccionar tipo caract...</option>");
+            arr.forEach(function(i, x) {
+                $('#tipo_matnr').append("<option value='" + i.id + "'>" + i.TIPO + "</option>");
+            }); 
+        }
+        
+        function setListTipoDatos(arr){
+            $('#tipo_dato').append("<option>Seleccionar tipo de dato...</option>");
+            arr.forEach(function(i, x) {
+                $('#tipo_dato').append("<option value='" + i.id + "'>" + i.descr + "</option>");
+            }); 
+        }
+        
+        function alertWarningDescr(){
+            swal("Cuidado!!", "Ingrese la descripción!!", "warning");
+        }
+        
+        function alertWarningTipo_Car(){
+            swal("Cuidado!!", "Seleccione tipo caracteristica!!", "warning");
+        }
+        
+        function alertError(){
+            swal("Error!!", "Error al agregar, intente nuevamente!!", "error");
+        }
+        
+        function alertSucces(){
+        swal({
+            title: "",
+            text: "La nueva caracteristica ha sido agregada!!",
+            icon: "success",
+            buttons: {
+                caract: {
+                    text: "Ver Caracteristica",
+                    value: "ver",
+                },
+                OK: true,
+            },
+            })
+            .then((value) => {
+                switch (value){
+                    
+                    case "ver":
+                        redirCaract();
+                    break;
+                    
+                    case "OK":
+                        redirAddCaract();
+                    break;
+                }
+            });
+        }
+        
+        function redirCaract() {
+            window.location.href = "http://localhost:53457/Inventario-1/caracteristicas.xhtml";
+        }
+        
+        function redirAddCaract() {
+            window.location.href = "http://localhost:53457/Inventario-1/caract_agregar.xhtml";
+        }
+        
+        //]]> 
+    </script>
+    </h:body>
+</html>
